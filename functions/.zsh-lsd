@@ -14,7 +14,7 @@ if (( $+commands[lsd] )); then
   typeset enable_autocd=0
   typeset -ag lsd_params
 
-  lsd_params=('--config-file ${Plugins[ZSH_LSD]}/config.yaml')
+  lsd_params=(--config-file=${Plugins[ZSH_LSD]}/config.yaml)
 
   alias ls='lsd $lsd_params'
   alias ll='lsd --all --header --long $lsd_params'
