@@ -23,6 +23,6 @@ autoload -Uz .zsh-lsd
 (( $+functions[.zsh-lsd] )) && {
   .zsh-lsd || {
     print "Error loading zsh-lsd plugin"
-    exit 1
+    return 1
   }
 }

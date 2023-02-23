@@ -1,8 +1,4 @@
 version: 0.1
-runtimes:
-  enabled:
-    - go@1.18.3
-    - node@16.14.2
 cli:
   version: 1.5.0
 plugins:
@@ -10,22 +6,20 @@ plugins:
     - id: trunk
       ref: v0.0.11
       uri: https://github.com/trunk-io/plugins
-repo:
-  repo:
-    host: github.com
-    owner: zplugin
-    name: zsh-exa
+lint:
+  enabled:
+    - actionlint@1.6.23
+    - git-diff-check
+    - gitleaks@8.15.3
+    - markdownlint@0.33.0
+    - prettier@2.8.4
+runtimes:
+  enabled:
+    - go@1.19.5
+    - node@18.12.1
 actions:
   enabled:
     - trunk-announce
     - trunk-check-pre-push
     - trunk-fmt-pre-commit
     - trunk-upgrade-available
-    - trunk-cache-prune
-lint:
-  enabled:
-    - markdownlint@0.33.0
-    - prettier@2.8.4
-    - git-diff-check@SYSTEM
-    - actionlint@1.6.23
-    - gitleaks@8.15.3
