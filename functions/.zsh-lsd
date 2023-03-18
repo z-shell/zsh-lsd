@@ -3,36 +3,37 @@
 #
 # Copyright (c) 2022 Salvydas Lukosius
 
-if [[ $TERM == 'dumb' ]]; then
-  return 1
-fi
-
 builtin emulate -L zsh ${=${options[xtrace]:#off}:+-o xtrace}
-builtin setopt extended_glob warn_create_global typeset_silent
+builtin setopt extended_glob warn_create_global typeset_silent local_options
 
-if (( $+commands[lsd] )); then
-  typeset enable_autocd=0
+typeset -i enable_autocd=0 ret=0
+
+if [[ $TERM == 'dumb' ]]; then
+  ret=0
+elif (( ! $+commands[lsd] )); then
+  print "Please install lsd before using this plugin." >&2
+  ret=1
+else
   typeset -ag lsd_params
+  lsd_params=( "--config-file=${Plugins[ZSH_LSD]}/config.yaml" )
 
-  lsd_params=(--config-file=${Plugins[ZSH_LSD]}/config.yaml)
-
-  alias ls='lsd $lsd_params'
-  alias ll='lsd --all --header --long $lsd_params'
-  alias llm='lsd --all --header --long --sort time $lsd_params'
-  alias la='lsd -lhiUa --group-directories-first'
-  alias lx='lsd -lhiUSA --total-size'
-  alias lt='lsd --tree $lsd_params'
-  alias tree='lsd --tree $lsd_params'
+  alias ls='command lsd $lsd_params'
+  alias ll='command lsd --all --header --long $lsd_params'
+  alias llm='command lsd --all --header --long --sort time $lsd_params'
+  alias la='command lsd -lhiUa --group-directories-first'
+  alias lx='command lsd -lhiUSA --group-directories-first --total-size'
+  alias lt='command lsd --tree $lsd_params'
+  alias tree='command lsd --tree $lsd_params'
 
   [[ "$AUTOCD" = <-> ]] && enable_autocd="$AUTOCD"
+
   if [[ "$enable_autocd" == "1" ]]; then
     # Function for cd auto list directories
     →auto-lsd() { command lsd $lsd_params; }
-    [[ $chpwd_functions[(r)→auto-lsd] == →auto-lsd ]] || chpwd_functions=( →auto-lsd $chpwd_functions )
+    [[ $chpwd_functions[(r)→auto-lsd] == →auto-lsd ]] || chpwd_functions+=( →auto-lsd )
   fi
-else
-  print "Please install lsd before using this plugin." >&2
-  return 1
+  
+  ret=$?
 fi
 
-return 0
+return $ret
