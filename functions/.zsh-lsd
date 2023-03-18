@@ -30,7 +30,7 @@ else
   if [[ "$enable_autocd" == "1" ]]; then
     # Function for cd auto list directories
     →auto-lsd() { command lsd $lsd_params; }
-    [[ $chpwd_functions[(r)→auto-lsd] == →auto-lsd ]] || chpwd_functions+=( →auto-lsd )
+    [[ $chpwd_functions[(r)→auto-lsd] == →auto-lsd ]] || chpwd_functions=( →auto-lsd $chpwd_functions )
   fi
   
   ret=$?
