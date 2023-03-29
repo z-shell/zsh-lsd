@@ -16,6 +16,6 @@ jobs:
       - uses: actions/add-to-project@main
         with:
           project-url: https://github.com/orgs/z-shell/projects/4
-          github-token: ${{ secrets.GH_PAT }}
+          github-token: ${{ github.token }}
           labeled: bug 🐞, triage 📑, annex 🌀, plugin ⚙️, package 📦, feature-request 💡
           label-operator: OR
