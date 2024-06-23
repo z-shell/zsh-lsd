@@ -1,9 +1,6 @@
 ---
 name: "⭕ Trunk"
 on:
-  push:
-    branches: [main]
-    tags: ["v*.*.*"]
   pull_request:
     types: [opened, synchronize]
   workflow_dispatch: {}
@@ -19,4 +16,4 @@ jobs:
       - name: ✅ Checkout
         uses: actions/checkout@v4
       - name: ✨ Trunk Check
-        uses: trunk-io/trunk-action@f6c5f1b90503c30e02059667dbc247f2257b63c5
+        uses: trunk-io/trunk-action@v1
